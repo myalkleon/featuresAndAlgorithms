@@ -1,3 +1,4 @@
+'use strict'
 const chat = {
     say(nickname, clan = 'neutral', phrase) {
         let time = `${new Date().getHours()} : ${new Date().getMinutes()} : ${new Date().getSeconds()}`;
