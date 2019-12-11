@@ -11,22 +11,27 @@ function User(nickname, clan = 'neutral', status = 'default') {
     this.clan = clan;
     this.status = status;
 }
-User.prototype.sayNow = function(func, phrase) {
-    let date = new Date();
-    let time = `${date.getHours()} : ${date.getMinutes()} : ${date.getSeconds()}`;
-    func.call(this, phrase, time);
+
+function sayDecorator(func) {
+    return function(phrase) {
+        let date = new Date();
+        let time = `${date.getHours()} : ${date.getMinutes()} : ${date.getSeconds()}`;
+        func.call(this, phrase, time);
+    }
 }
+
+User.prototype.sayNow = sayDecorator(chat.say);
 
 const user1 = new User('Jax', 'Lords');
 const user2 = new User('Groa', 'Orcs');
 const user3 = new User('Bob', undefined, 'gold');
 
-user1.sayNow(chat.say, 'Hi gyus!');
+user1.sayNow('Hi gyus!');
 
 setTimeout(() => {
-    user2.sayNow(chat.say, 'ARRRRRR!');
+    user2.sayNow('ARRRRRR!');
 }, 3000);
 
 setTimeout(() => {
-    user3.sayNow(chat.say, 'Fucking orcs!');
+    user3.sayNow('Fucking orcs!');
 }, 6000);
