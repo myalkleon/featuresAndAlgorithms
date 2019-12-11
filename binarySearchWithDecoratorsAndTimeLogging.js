@@ -1,3 +1,4 @@
+'use strict';
 function binarySearch(list, element) {
     let low = 0;
     let high = list.length - 1;

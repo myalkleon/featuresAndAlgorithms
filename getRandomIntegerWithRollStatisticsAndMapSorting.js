@@ -1,3 +1,4 @@
+'use strict';
 function getRandomInteger(min, max) {
     max += 1;
     return (min + Math.trunc(Math.random() * (max - min)));
