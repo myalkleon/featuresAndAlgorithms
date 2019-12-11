@@ -1,2 +1,2 @@
 # Some features and algorithms of JavaScript
-The collection of interesting features and algorithms
+The collection of some interesting features and algorithms
