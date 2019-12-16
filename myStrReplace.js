@@ -1,4 +1,5 @@
 'use strict';
+//I know, that it can be done with regular expressions :)
 function myStrReplace(str, subStr, by) {
     let finStr = '';
     for(let i = str.indexOf(subStr); i < str.length && i !== -1; i = str.indexOf(subStr, ++i)) {
