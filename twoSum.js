@@ -11,6 +11,22 @@ function twoSum(nums, target) {
     return finMap;
 }
 
+function twoSumBruteForce(nums, target) {
+    const finMap = new Map();
+    
+    for (let i = 0; i <= nums.length - 1; i++) {
+        let currentNum = nums[i];
+        for (let j = i+1; j <= nums.length - 1; j++) {
+            let nextNum = nums[j];
+            let numsSum = currentNum + nextNum;
+            if (numsSum === target) {
+                finMap.set(i, j);
+            } 
+        }       
+    }    
+    return finMap;
+}
+
 function arrayToMap(arr, target) {
     const hash = new Map();
     for(let i = 0; i < arr.length; i++) {
@@ -62,18 +78,14 @@ function getRandomInteger(min, max) {
     return (min + Math.trunc(Math.random() * (max - min)));
 }
 
-
-
-
-
-
-
-
-
-
 let twoSumDecorated = executionTimeLoggerDecorator(twoSum, false);
+let twoSumBruteForceDecorated = executionTimeLoggerDecorator(twoSumBruteForce, false);
 let buildBigArrayDecorated = executionTimeLoggerDecorator(buildBigArray, false);
 
-const bigArr = buildBigArrayDecorated(100000)
-let result = twoSumDecorated(bigArr, 666666);
-let stop = true;
+const bigArr = buildBigArrayDecorated(100000);
+let result = twoSumDecorated(bigArr, 6);
+let resultBruteForce = twoSumBruteForceDecorated(bigArr, 6);
+let stop = 1;
+// for(let pair of result) {
+//     console.log(pair);
+// }
