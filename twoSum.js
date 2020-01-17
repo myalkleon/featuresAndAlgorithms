@@ -1,13 +1,13 @@
-function twoSum(nums, target) {
-    const hash = arrayToMap(nums, target);
+function twoSumObject(nums, target) {
+    const hash = Object.create(null);
     const finMap = new Map();
-    for(let pair of hash) {
-        if(hash.get(pair[1]) === pair[0]) {
-            const first = nums.indexOf(pair[0]);
-            const second = nums.indexOf(pair[1]);
-            finMap.set(first, second);
+    nums.map(function(item, index, array) {
+        let diff = target - item;
+        if(diff in hash) {
+            finMap.set(hash[diff][1], index);
         }
-    }
+        hash[item] = [diff, index];
+    });
     return finMap;
 }
 
@@ -27,14 +27,17 @@ function twoSumBruteForce(nums, target) {
     return finMap;
 }
 
-function arrayToMap(arr, target) {
+function twoSumMap(nums, target) {
     const hash = new Map();
-    for(let i = 0; i < arr.length; i++) {
-        const key = arr[i];
-        const value = target - key;
-        hash.set(key, value);
-    }
-    return hash;
+    const finMap = new Map();
+    nums.map(function(item, index, array) {
+        let diff = target - item;
+        if(hash.has(diff)) {
+            finMap.set(hash.get(diff)[1], index);
+        }
+        hash.set(item, [diff, index])
+    });
+    return finMap;
 }
 
 function executionTimeLoggerDecorator(func, showArgs = false) {
@@ -71,21 +74,23 @@ function buildBigArray(count) {
         arr.push(getRandomInteger(1, count));
     }
     return arr;
+
+    function getRandomInteger(min, max) {
+        max += 1;
+        return (min + Math.trunc(Math.random() * (max - min)));
+    }
 }
 
-function getRandomInteger(min, max) {
-    max += 1;
-    return (min + Math.trunc(Math.random() * (max - min)));
-}
-
-let twoSumDecorated = executionTimeLoggerDecorator(twoSum, false);
-let twoSumBruteForceDecorated = executionTimeLoggerDecorator(twoSumBruteForce, false);
 let buildBigArrayDecorated = executionTimeLoggerDecorator(buildBigArray, false);
-
 const bigArr = buildBigArrayDecorated(100000);
-let result = twoSumDecorated(bigArr, 6);
-let resultBruteForce = twoSumBruteForceDecorated(bigArr, 6);
-let stop = 1;
-// for(let pair of result) {
-//     console.log(pair);
-// }
+
+
+let twoSumMapDecorated = executionTimeLoggerDecorator(twoSumMap, false);
+let twoSumBruteForceDecorated = executionTimeLoggerDecorator(twoSumBruteForce, false);
+let twoSumObjectDecorated = executionTimeLoggerDecorator(twoSumObject, false);
+let target = 10;
+let resultMap = twoSumMapDecorated(bigArr, target);
+let resultBruteForce = twoSumBruteForceDecorated(bigArr, target);
+let resultObject = twoSumObjectDecorated(bigArr, target);
+
+let stop = true;
